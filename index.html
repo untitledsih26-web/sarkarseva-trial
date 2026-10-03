@@ -1,820 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ANAAJ — Farmer's Companion</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sarkar Seva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green-50: #EAF3DE;
-    --green-100: #C0DD97;
-    --green-200: #97C459;
-    --green-400: #639922;
-    --green-600: #3B6D11;
-    --green-800: #27500A;
-    --green-900: #173404;
-    --amber-50: #FAEEDA;
-    --amber-100: #FAC775;
-    --amber-200: #EF9F27;
-    --amber-400: #BA7517;
-    --amber-600: #854F0B;
-    --amber-800: #633806;
-    --red-50: #FCEBEB;
-    --red-200: #F09595;
-    --red-400: #E24B4A;
-    --red-600: #A32D2D;
-    --blue-50: #E6F1FB;
-    --blue-200: #85B7EB;
-    --blue-400: #378ADD;
-    --blue-600: #185FA5;
-    --blue-800: #0C447C;
-    --teal-50: #E1F5EE;
-    --teal-400: #1D9E75;
-    --teal-600: #0F6E56;
-    --gray-50: #F1EFE8;
-    --gray-100: #D3D1C7;
-    --gray-400: #888780;
-    --gray-600: #5F5E5A;
-    --gray-800: #444441;
-    --bg: #F7F5EF;
-    --surface: #FDFCF8;
-    --border: rgba(60,55,30,0.1);
-    --text: #1a1a14;
-    --text-muted: #5a5850;
-  }
+:root{--ink:#0e1a3d;--muted:#6b7390;--line:#e8eaf3;--indigo:#4a4de8;--tint:#eceeff;--green:#1f9d6b;--gtint:#e3f6ee;--amber:#f5a524;--atint:#fff1d6;--peach:#fff6ec;--card:#fff}
+*{box-sizing:border-box;margin:0}
+body{font-family:Roboto,system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff 40%,var(--peach));min-height:100vh}
+.script{font-family:"Dancing Script",cursive;color:var(--indigo)}
+button,input{font:inherit}
+button{cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+.screen{display:none;min-height:100vh;padding:28px clamp(16px,5vw,64px)}
+.screen.on{display:block}
+.btn{background:var(--ink);color:#fff;padding:13px 24px;border-radius:10px;font-weight:500;display:inline-flex;gap:10px;align-items:center}
+.btn.ghost{background:none;color:var(--ink)}
+.btn.sm{padding:9px 18px}
+.card{background:var(--card);border-radius:14px;box-shadow:0 1px 3px rgba(20,30,70,.06),0 8px 24px rgba(20,30,70,.04)}
+.ico{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--tint);color:var(--indigo);flex:none}
+.ico.g{background:var(--gtint);color:var(--green)}.ico.o{background:var(--atint);color:#d9822b}
+.ico svg,.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.back{color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:24px}
+.back .ic{width:16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+.logo .ico{width:34px;height:34px;background:var(--indigo);color:#fff}
+.pill{font-size:13px;font-weight:500;padding:5px 12px;border-radius:99px;background:var(--gtint);color:var(--green)}
+.pill.p{background:var(--atint);color:#c47a0d}
+.center{max-width:720px;margin:0 auto}
+h1{font-size:30px;font-weight:700}
+.sub{color:var(--muted);margin:6px 0 24px}
+.row{display:flex;align-items:center;gap:14px;padding:16px 20px}
+.row b{display:block}.row small{color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:700px){.grid3,.grid4,.two,.hero,.signin,.shell{grid-template-columns:1fr!important}.side,.art{display:none!important}}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* 1 landing */
+.nav{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto}
+.nav nav{display:flex;gap:32px;align-items:center;color:var(--muted)}
+.hero{max-width:1200px;margin:48px auto 0;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.hero .script.big{font-size:clamp(64px,10vw,120px);line-height:1;color:var(--ink);display:block;margin:4px 0 20px}
+.hero .lead{font-size:30px}
+.hero p{color:var(--muted);font-size:17px;line-height:1.7}
+.hero .cta{display:flex;gap:24px;align-items:center;margin:28px 0}
+.hero .tag{font-size:26px;line-height:1.3}
+.orbit{position:relative;height:420px;max-width:460px;margin:auto;width:100%}
+.orbit>*{position:absolute}
+.orbit .core{left:50%;top:50%;width:130px;height:130px;margin:-65px;border-radius:32px;background:linear-gradient(145deg,#5a63f5,#3a35d6);color:#fff;display:grid;place-items:center;font-weight:700;box-shadow:0 20px 50px rgba(74,77,232,.35)}
+.orbit .n{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-weight:500;text-align:center}
+.n.i{left:50%;top:0;margin-left:-48px;background:#e8ecff;color:var(--indigo)}
+.n.c{left:2%;bottom:6%;background:#fff1c9;color:#b7791f}
+.n.r{right:2%;bottom:6%;background:#dcf5e8;color:var(--green)}
+.orbit svg.l{inset:0;width:100%;height:100%;stroke:#c3c8e8;stroke-dasharray:4 6}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+/* 2 sign in */
+.signin{display:grid;grid-template-columns:1fr 1fr;max-width:1100px;margin:0 auto;min-height:80vh;overflow:hidden}
+.signin .art{background:linear-gradient(#ecdcf5,#ffe0c2 60%);position:relative}
+.signin .art .script{position:absolute;left:32px;top:28px;font-size:30px;line-height:1.1}
+.signin .art .sea{position:absolute;inset:auto 0 0;height:36%;background:#4c80ad}
+.signin .art .arch{position:absolute;left:18%;bottom:36%;width:140px;height:150px;background:#c9954f;border-radius:70px 70px 0 0}
+.signin .art .arch:after{content:"";position:absolute;left:36px;top:40px;width:68px;height:110px;background:#6b4423;border-radius:34px 34px 0 0}
+.signin form{padding:clamp(24px,5vw,64px);align-self:center}
+.tabs{display:flex;border-bottom:1px solid var(--line);margin:24px 0 18px}
+.tabs button{flex:1;padding:12px;color:var(--muted);border-bottom:2px solid transparent}
+.tabs .on{color:var(--ink);font-weight:500;border-color:var(--ink)}
+.field{display:flex;gap:12px;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:16px}
+.field input{border:0;outline:0;flex:1;background:none}
+.sep{text-align:center;color:var(--muted);margin:14px 0;font-size:13px}
+.gbtn{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px;font-weight:500;background:#fff}
+.secure{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
 
-  /* TOP BAR */
-  .topbar {
-    background: var(--green-900);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.6rem;
-    color: var(--green-50);
-    letter-spacing: 0.04em;
-  }
-  .logo-icon {
-    width: 32px; height: 32px;
-    background: var(--green-400);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-  .topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .location-pill {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.1);
-    color: var(--green-100);
-    font-size: 13px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .location-pill:hover { background: rgba(255,255,255,0.18); }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-200); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+/* 3 dashboard */
+.shell{display:grid;grid-template-columns:230px 1fr;gap:32px;max-width:1200px;margin:0 auto}
+.side{display:flex;flex-direction:column;gap:6px;min-height:80vh}
+.side .logo{margin-bottom:24px}
+.side button{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:10px;color:var(--muted);text-align:left}
+.side .on{background:var(--tint);color:var(--ink);font-weight:500}
+.side .me{margin-top:auto;display:flex;gap:10px;align-items:center;padding:12px 14px;border-top:1px solid var(--line)}
+.me i{font-style:normal;background:var(--tint);color:var(--indigo);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:500}
+.ask{padding:20px;margin:20px 0 32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ask b{width:100%}
+.ask input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:14px;outline:0}
+.ask .btn{padding:13px 16px}
+h2{font-size:17px;margin-bottom:14px;font-weight:700}
+.svc{padding:24px 12px;border-radius:14px;display:grid;gap:10px;justify-items:center;font-weight:500;font-size:14px;text-align:center}
+.svc:nth-child(1){background:#fff0dd;color:#c46f12}.svc:nth-child(2){background:#e6eeff;color:#3552d6}
+.svc:nth-child(3){background:#e1f5ea;color:var(--green)}.svc:nth-child(4){background:#ece9ff;color:#5b52c9}
+.head{display:flex;justify-content:space-between;align-items:center}
+.head button{color:var(--indigo);font-size:14px;font-weight:500}
 
-  /* MAIN LAYOUT */
-  .shell { max-width: 1140px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+/* 4-5 */
+.center h1.script{font-size:clamp(40px,7vw,64px);color:var(--ink);text-align:center;font-weight:500;margin:20px 0 32px}
+.foot{display:flex;justify-content:flex-end;margin-top:24px}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.meta{padding:14px 20px;margin-top:16px;color:var(--muted);font-size:14px}
 
-  /* HERO WEATHER */
-  .hero-card {
-    background: linear-gradient(135deg, var(--green-800) 0%, var(--green-600) 60%, var(--teal-600) 100%);
-    border-radius: 20px;
-    padding: 2rem 2.5rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1.5rem;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-card::before {
-    content: '';
-    position: absolute;
-    right: -40px; top: -40px;
-    width: 220px; height: 220px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-  }
-  .hero-card::after {
-    content: '';
-    position: absolute;
-    right: 40px; bottom: -60px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.04);
-  }
-  .hero-left {}
-  .hero-greeting {
-    font-size: 13px;
-    color: var(--green-100);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
-  }
-  .hero-temp {
-    font-family: 'Instrument Serif', serif;
-    font-size: 5rem;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-  .hero-temp sup { font-size: 2rem; vertical-align: top; margin-top: 0.5rem; display: inline-block; }
-  .hero-condition {
-    font-size: 1.1rem;
-    color: var(--green-50);
-    font-weight: 300;
-    margin-bottom: 1.25rem;
-  }
-  .hero-stats {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .hero-stat {
-    display: flex;
-    flex-direction: column;
-  }
-  .hero-stat-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--green-100);
-    margin-bottom: 2px;
-  }
-  .hero-stat-val {
-    font-size: 15px;
-    font-weight: 500;
-    color: #fff;
-  }
-  .hero-icon-area {
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .weather-icon-big {
-    font-size: 72px;
-    line-height: 1;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
-  }
-  .hero-date {
-    font-size: 12px;
-    color: var(--green-100);
-    margin-top: 6px;
-  }
+/* 6 consent */
+.consent{display:grid;grid-template-columns:1.3fr 1fr;max-width:1100px;margin:0 auto;overflow:hidden}
+.consent>div:first-child{padding:clamp(24px,4vw,48px)}
+.consent .art{background:linear-gradient(160deg,#eef0ff,var(--peach));display:grid;place-content:center;justify-items:center;gap:20px;padding:32px}
+.shield{width:110px;height:110px;border-radius:30px;background:#dfe5ff;color:var(--indigo);display:grid;place-items:center}
+.shield svg{width:52px;height:52px;fill:none;stroke:currentColor;stroke-width:1.6}
+.art .script{font-size:26px;line-height:1.2}
+.tick{width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;margin-left:auto;flex:none}
+.tick .ic{width:14px;stroke-width:3}
+.note{background:#f3f5ff;border-radius:10px;padding:14px 16px;color:var(--muted);font-size:14px;margin:16px 0 24px;line-height:1.6}
+.consent .row{border-bottom:1px solid var(--line)}
 
-  /* SECTION HEADING */
-  .section-heading {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.3rem;
-    color: var(--green-900);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-heading span { font-size: 16px; }
+/* 7 orchestration */
+.dark{background:#0b1a3e;color:#fff;border-radius:18px;padding:32px;max-width:1100px;margin:0 auto;min-height:80vh;position:relative}
+.dark .top{display:flex;justify-content:space-between;color:#9fb0dc;font-size:13px}
+.dark h1{margin:8px 0 28px}
+.steps{list-style:none;padding:0;position:relative}
+.steps li{display:flex;gap:16px;padding-bottom:22px;opacity:.4;transition:.3s}
+.steps li.on,.steps li.done{opacity:1}
+.dot{width:26px;height:26px;border-radius:50%;border:2px solid #3b4d80;flex:none;display:grid;place-items:center}
+.done .dot{background:var(--green);border-color:var(--green)}
+.on .dot{border-color:#5a7bff}
+.dot .ic{width:14px;stroke-width:3;opacity:0}.done .dot .ic{opacity:1}
+.steps small{display:block;color:#8ea0cf;margin-top:2px}
+.chips{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.chip{padding:12px 18px;border-radius:10px;border:1px solid #f5a52480;background:#3a2c10;min-width:150px;font-weight:500}
+.chip small{color:var(--amber);margin:2px 0 0 18px}
+.chip:before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--amber);margin-right:8px}
+.chip.ok{background:#0d3a35;border-color:#1f9d6b80}.chip.ok small{color:#4ad6a0}.chip.ok:before{background:#27c28a}
+.dark .script{position:absolute;right:6%;top:36%;color:#fff;font-size:30px;line-height:1.2}
+@media(max-width:700px){.dark .script{display:none}}
 
-  /* RISK CARDS ROW */
-  .risk-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  .risk-card {
-    background: var(--surface);
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    padding: 1.25rem;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .risk-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-  .risk-card-accent {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    border-radius: 16px 16px 0 0;
-  }
-  .risk-low .risk-card-accent { background: var(--green-400); }
-  .risk-medium .risk-card-accent { background: var(--amber-200); }
-  .risk-high .risk-card-accent { background: var(--red-400); }
-  .risk-icon { font-size: 28px; margin-bottom: 8px; }
-  .risk-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-400); font-weight: 500; }
-  .risk-level {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 4px 0;
-  }
-  .risk-low .risk-level { color: var(--green-600); }
-  .risk-medium .risk-level { color: var(--amber-400); }
-  .risk-high .risk-level { color: var(--red-600); }
-  .risk-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
-  .risk-badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-top: 6px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .risk-low .risk-badge { background: var(--green-50); color: var(--green-800); }
-  .risk-medium .risk-badge { background: var(--amber-50); color: var(--amber-600); }
-  .risk-high .risk-badge { background: var(--red-50); color: var(--red-600); }
+/* 8 exchange */
+.xch{display:grid;grid-template-columns:260px 1fr 220px;gap:20px;align-items:center;margin:28px 0}
+.xch .col{display:grid;gap:14px}
+.xch .row{padding:14px}
+.flow{height:3px;background:repeating-linear-gradient(90deg,var(--indigo) 0 6px,transparent 6px 12px);opacity:.5;transition:.4s}
+.flow.ok{background:repeating-linear-gradient(90deg,var(--green) 0 6px,transparent 6px 12px);opacity:1}
+.phases{display:flex;justify-content:space-between;padding:12px 16px;color:#a2a8c0;flex-wrap:wrap;gap:8px}
+.phases span{padding:9px 18px;border-radius:99px;transition:.3s}
+.phases .on{background:var(--ink);color:#fff;font-weight:500}
+.xch .tick{opacity:0;transition:.3s}.xch .ok .tick{opacity:1}
 
-  /* ADVICE CARD */
-  .advice-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem 1.75rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-  .advice-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--blue-50);
-    color: var(--blue-800);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 1rem;
-  }
-  .advice-quote {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.35rem;
-    color: var(--green-900);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    font-style: italic;
-  }
-  .advice-bullets {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-  }
-  .advice-bullets li {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.4;
-  }
-  .bullet-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--green-400);
-    margin-top: 5px;
-    flex-shrink: 0;
-  }
+/* 9 validation */
+.chk{padding:22px 24px}
+.chk li{list-style:none;display:flex;gap:12px;align-items:center;padding:9px 0;color:#3a4366}
+.chk .ic{color:var(--green);width:16px;stroke-width:3}
+.chk h2{margin-bottom:8px}
 
-  /* 7-DAY FORECAST */
-  .forecast-strip {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .forecast-day {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 0.8rem 0.4rem;
-    text-align: center;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-  .forecast-day:hover { border-color: var(--green-200); background: var(--green-50); }
-  .forecast-day.today {
-    background: var(--green-900);
-    border-color: var(--green-900);
-  }
-  .forecast-day.today .fday-name,
-  .forecast-day.today .fday-hi,
-  .forecast-day.today .fday-lo { color: #fff; }
-  .forecast-day.today .fday-icon { filter: brightness(1.5); }
-  .fday-name { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gray-400); margin-bottom: 6px; }
-  .fday-icon { font-size: 22px; margin-bottom: 6px; }
-  .fday-hi { font-size: 14px; font-weight: 600; color: var(--text); }
-  .fday-lo { font-size: 11px; color: var(--text-muted); }
-  .fday-rain {
-    font-size: 10px;
-    color: var(--blue-600);
-    margin-top: 4px;
-    font-weight: 500;
-  }
+/* 10 result */
+.res{text-align:center;max-width:760px;margin:0 auto}
+.res .script.t{position:absolute;left:6%;top:70px;font-size:28px;line-height:1.1;text-align:left}
+.res .ico{margin:24px auto 18px;width:64px;height:64px}
+.res .ico svg{width:30px;height:30px}
+.res h1{font-size:34px}
+.elig{display:inline-block;background:var(--green);color:#fff;font-weight:700;letter-spacing:.06em;font-size:22px;padding:12px 36px;border-radius:10px;margin:18px 0 8px}
+.facts{display:flex;justify-content:space-between;text-align:left;margin:28px 0;color:var(--muted);font-size:13px}
+.facts b{display:block;color:var(--ink);font-size:18px;margin-top:2px}
+.vv small{color:var(--green)!important;font-weight:500}
 
-  /* BOTTOM GRID */
-  .bottom-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .info-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.25rem;
-  }
-  .info-card-title {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--gray-400);
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  .soil-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-  }
-  .soil-item:last-child { border-bottom: none; }
-  .soil-key { color: var(--text-muted); }
-  .soil-val { font-weight: 500; color: var(--text); }
-  .progress-bar-wrap {
-    margin-bottom: 1rem;
-  }
-  .pb-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; color: var(--text-muted); }
-  .pb-val { font-weight: 500; color: var(--text); }
-  .pb-track {
-    height: 8px;
-    background: var(--gray-50);
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-  .pb-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 1s ease;
-  }
-  .pb-green { background: var(--green-400); }
-  .pb-amber { background: var(--amber-200); }
-  .pb-blue { background: var(--blue-400); }
-
-  /* LOADING OVERLAY */
-  .loading { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); }
-  .spinner {
-    width: 16px; height: 16px;
-    border: 2px solid var(--gray-100);
-    border-top-color: var(--green-400);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ALERT BANNER */
-  .alert-banner {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: var(--amber-50);
-    border: 1px solid var(--amber-100);
-    border-left: 4px solid var(--amber-200);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-  .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-  .alert-text { font-size: 14px; color: var(--amber-800); line-height: 1.5; }
-  .alert-text strong { display: block; font-weight: 600; margin-bottom: 2px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
-
-  /* RESPONSIVE */
-  @media (max-width: 780px) {
-    .hero-card { grid-template-columns: 1fr; }
-    .hero-icon-area { display: none; }
-    .risk-row { grid-template-columns: 1fr; }
-    .forecast-strip { grid-template-columns: repeat(4, 1fr); }
-    .forecast-strip .forecast-day:nth-child(n+5) { display: none; }
-    .bottom-grid { grid-template-columns: 1fr; }
-    .advice-bullets { grid-template-columns: 1fr; }
-  }
+/* 12 list */
+.list a{display:flex;gap:16px;align-items:center;padding:18px 20px;margin-bottom:12px;cursor:pointer}
+.list a div{flex:1}
+.list a small{color:var(--muted)}
+.tagline{font-size:34px;line-height:1.1;margin-top:40px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="logo">
-    <div class="logo-icon">🌱</div>
-    ANAAJ
-  </div>
-  <div class="topbar-right">
-    <div class="location-pill" id="location-pill">
-      <div class="dot"></div>
-      <span id="location-name">Detecting...</span>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN SHELL -->
-<div class="shell">
-
-  <!-- HERO WEATHER CARD -->
-  <div class="hero-card" id="hero-card">
-    <div class="hero-left">
-      <div class="hero-greeting">Today's Conditions</div>
-      <div class="hero-temp" id="hero-temp">
-        <span id="temp-val">--</span><sup>°C</sup>
+<!-- 1 Landing -->
+<section class="screen on" id="s1">
+  <header class="nav">
+    <div class="logo"><span class="ico" data-i="layers"></span>Sarkar Seva</div>
+    <nav><a>Home</a><a>About</a><a>How it works</a><button class="btn sm" data-go="s2">Get started</button></nav>
+  </header>
+  <div class="hero">
+    <div>
+      <span class="script lead">Government services</span>
+      <span class="script big">connected.</span>
+      <p>One request. Multiple departments.<br>One coordinated journey.</p>
+      <div class="cta">
+        <button class="btn" data-go="s2">Start a request <span data-i="arrow" class="ic-wrap"></span></button>
+        <button class="btn ghost" data-go="s7">Watch how it works</button>
       </div>
-      <div class="hero-condition" id="hero-cond">Loading weather data…</div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-label">Humidity</div>
-          <div class="hero-stat-val" id="stat-hum">--</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-label">Wind</div>
-          <div class="hero-stat-val" id="stat-wind">--</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-label">Rain chance</div>
-          <div class="hero-stat-val" id="stat-rain">--</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-label">UV Index</div>
-          <div class="hero-stat-val" id="stat-uv">--</div>
-        </div>
+      <p class="script tag">Same you.<br>Better process.<br>Faster services.</p>
+    </div>
+    <div class="orbit" aria-hidden="true">
+      <svg class="l" viewBox="0 0 460 420"><path d="M230 90V170M180 250L95 330M280 250L365 330" fill="none"/></svg>
+      <div class="core">Sarkar Seva</div>
+      <div class="n i">Identity</div><div class="n c">Income</div><div class="n r">Revenue</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 Sign in -->
+<section class="screen" id="s2">
+  <div class="card signin">
+    <div class="art"><span class="script">Mumbai<br>Gateway of India</span><div class="arch"></div><div class="sea"></div></div>
+    <form onsubmit="event.preventDefault();go('s3')">
+      <div class="logo"><span class="ico" data-i="layers"></span>Sarkar Seva</div>
+      <h1 style="margin-top:36px">Welcome back!</h1>
+      <p class="sub" style="margin-bottom:0">Log in to continue to Sarkar Seva</p>
+      <div class="tabs" role="tablist"><button type="button" class="on">Mobile / Email</button><button type="button">Aadhaar</button></div>
+      <label class="field">+91 <input type="tel" placeholder="Mobile number" value="98765 43210" aria-label="Mobile number"></label>
+      <button class="btn" style="width:100%;justify-content:center">Continue</button>
+      <div class="sep">or</div>
+      <button type="button" class="gbtn" data-go="s3">Continue with Google</button>
+      <p class="secure">Secure and trusted. Your data is safe with us.</p>
+    </form>
+  </div>
+</section>
+
+<!-- 3 Dashboard -->
+<section class="screen" id="s3">
+  <div class="shell">
+    <aside class="side">
+      <div class="logo"><span class="ico" data-i="layers"></span>Sarkar Seva</div>
+      <button class="on" data-go="s3"><span data-i="home" class="ic-wrap"></span>Home</button>
+      <button data-go="s4"><span data-i="plus" class="ic-wrap"></span>New Request</button>
+      <button data-go="s12"><span data-i="list" class="ic-wrap"></span>My Requests</button>
+      <button><span data-i="user" class="ic-wrap"></span>Profile</button>
+      <button style="margin-top:auto"><span data-i="help" class="ic-wrap"></span>Help</button>
+      <div class="me"><i>MC</i>SK</div>
+    </aside>
+    <main>
+      <h1>Good morning, Manya</h1>
+      <p class="sub" style="margin-bottom:0">Let's get your government work done, together.</p>
+      <form class="card ask" onsubmit="event.preventDefault();go('s4')">
+        <b>What do you need today?</b>
+        <input aria-label="Describe your request" value="Check my housing scheme eligibility">
+        <button class="btn" aria-label="Send request"><span data-i="arrow" class="ic-wrap"></span></button>
+      </form>
+      <h2>Popular Services</h2>
+      <div class="grid4" style="margin-bottom:32px">
+        <button class="svc" data-go="s4"><span data-i="home" class="ic-wrap"></span>Housing Scheme</button>
+        <button class="svc" data-go="s4"><span data-i="doc" class="ic-wrap"></span>Income Certificate</button>
+        <button class="svc" data-go="s4"><span data-i="home" class="ic-wrap"></span>Property Records</button>
+        <button class="svc" data-go="s4"><span data-i="dots" class="ic-wrap"></span>Other Services</button>
+      </div>
+      <div class="head"><h2>Recent Requests</h2><button data-go="s12">View all</button></div>
+      <div class="card row"><span class="ico" data-i="home"></span><div style="flex:1"><b>Housing Scheme Eligibility</b><small>Ref. No. GV-00102 &middot; 2 days ago</small></div><span class="pill">Completed</span></div>
+    </main>
+  </div>
+</section>
+
+<!-- 4 Understood -->
+<section class="screen" id="s4">
+  <div class="center">
+    <button class="back" data-back><span data-i="arrowl" class="ic-wrap"></span>Back</button>
+    <h1 class="script">We understood your request!</h1>
+    <div class="card row"><span class="ico" data-i="home"></span><div><b>Housing Scheme Eligibility</b><small>We'll check information from multiple departments.</small></div></div>
+    <h2 style="margin:32px 0 14px">Systems that will be involved</h2>
+    <div class="grid3">
+      <div class="card row"><span class="ico" data-i="user"></span><div><b>Identity</b><small>Department</small></div></div>
+      <div class="card row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Department</small></div></div>
+      <div class="card row"><span class="ico o" data-i="home"></span><div><b>Revenue</b><small>Department</small></div></div>
+    </div>
+    <div class="foot"><button class="btn" data-go="s5">Continue <span data-i="arrow" class="ic-wrap"></span></button></div>
+  </div>
+</section>
+
+<!-- 5 Review -->
+<section class="screen" id="s5">
+  <div class="center">
+    <button class="back" data-back><span data-i="arrowl" class="ic-wrap"></span>Back</button>
+    <h1>Review your request</h1>
+    <p class="sub">Please check the details before we proceed</p>
+    <div class="card row"><span class="ico" data-i="home"></span><div><b>Housing Scheme Eligibility</b><small>Request Id: GV-00102</small></div></div>
+    <div class="two" style="margin-top:28px">
+      <div><h2>Information Required</h2>
+        <div class="card"><div class="row"><span class="ico" data-i="doc"></span><div><b>Identity</b><small>Name, Aadhaar verification</small></div></div>
+        <div class="row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Annual income details</small></div></div>
+        <div class="row"><span class="ico" data-i="doc"></span><div><b>Property</b><small>Existing property records</small></div></div></div></div>
+      <div><h2>Purpose</h2><div class="card" style="padding:22px;color:var(--muted);line-height:1.6">Determining scheme eligibility based on your verified information.</div></div>
+    </div>
+    <div class="card meta">3 departments &middot; 3 data points &middot; 1 request</div>
+    <div class="foot"><button class="btn" data-go="s6">Continue <span data-i="arrow" class="ic-wrap"></span></button></div>
+  </div>
+</section>
+
+<!-- 6 Consent -->
+<section class="screen" id="s6">
+  <div class="card consent">
+    <div>
+      <h1>You're in control</h1>
+      <p class="sub">Sarkar Seva wants to access your data from the following government systems to process your request.</p>
+      <div class="row"><span class="ico g" data-i="shield"></span><div><b>Identity Department</b><small>Details: Name, Aadhaar, Profile</small></div><span class="tick" data-i="check"></span></div>
+      <div class="row"><span class="ico" data-i="doc"></span><div><b>Income Department</b><small>Details: Income, Tax details</small></div><span class="tick" data-i="check"></span></div>
+      <div class="row"><span class="ico o" data-i="home"></span><div><b>Property Department</b><small>Details: Property records</small></div><span class="tick" data-i="check"></span></div>
+      <p class="note">Your data is accessed securely and only for this request.<br>You can revoke access anytime.</p>
+      <button class="btn" data-go="s7">Allow access</button>
+      <button class="btn ghost" data-back>Cancel</button>
+    </div>
+    <div class="art">
+      <div class="shield"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+      <p class="script">Your data.<br>Your control.<br>Our responsibility.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 Orchestration -->
+<section class="screen" id="s7">
+  <div class="dark">
+    <div class="top"><span>Request ID: GV-00102</span><span>Processing...</span></div>
+    <h1>Agent Orchestration</h1>
+    <ol class="steps" id="steps"></ol>
+    <p class="script">Multiple agents.<br>One goal.</p>
+  </div>
+</section>
+
+<!-- 8 Exchange -->
+<section class="screen" id="s8">
+  <div class="card" style="max-width:1100px;margin:0 auto;padding:32px">
+    <h1 style="font-size:24px">Data Exchange</h1>
+    <p class="sub" style="margin-bottom:0">Government systems communicating through the interoperability layer</p>
+    <div class="xch">
+      <div class="col" id="depts">
+        <div class="card row"><span class="ico g" data-i="user"></span><b>Identity Dept</b><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico" data-i="doc"></span><b>Income Dept</b><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico o" data-i="home"></span><b>Revenue Dept</b><span class="tick" data-i="check"></span></div>
+      </div>
+      <div class="flow" id="flow"></div>
+      <div class="card row"><div><b>Response</b><small>To Agents</small></div></div>
+    </div>
+    <div class="card phases" id="phases"><span>Request</span><span>Standardize</span><span>Exchange</span><span>Return</span></div>
+  </div>
+</section>
+
+<!-- 9 Validation -->
+<section class="screen" id="s9">
+  <div class="center" style="max-width:960px">
+    <h1>Validating Information</h1>
+    <p class="sub">Cross-checking data across departments</p>
+    <div class="two">
+      <div style="display:grid;gap:14px;align-content:start">
+        <div class="card row"><span class="ico g" data-i="user"></span><div><b>Identity</b><small>Match found</small></div><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Record verified</small></div><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico" data-i="home"></span><div><b>Property</b><small>Details verified</small></div><span class="tick" data-i="check"></span></div>
+      </div>
+      <div>
+        <ul class="card chk" style="padding-left:24px">
+          <h2>Consistency Check</h2>
+          <li><span data-i="check"></span>Identity matches</li>
+          <li><span data-i="check"></span>Income record valid</li>
+          <li><span data-i="check"></span>Property record found</li>
+          <li><span data-i="check"></span>Required information complete</li>
+        </ul>
+        <p class="script" style="font-size:28px;line-height:1.2;margin-top:24px">No duplicate<br>submission required.</p>
       </div>
     </div>
-    <div class="hero-icon-area">
-      <div class="weather-icon-big" id="hero-icon">🌤️</div>
-      <div class="hero-date" id="hero-date">--</div>
-    </div>
+    <div class="foot"><button class="btn" data-go="s10">See result <span data-i="arrow" class="ic-wrap"></span></button></div>
   </div>
+</section>
 
-  <!-- ALERT BANNER (conditionally shown) -->
-  <div class="alert-banner" id="alert-banner" style="display:none;">
-    <div class="alert-icon">⚡</div>
-    <div class="alert-text">
-      <strong id="alert-title">Weather Alert</strong>
-      <span id="alert-msg"></span>
+<!-- 10 Result -->
+<section class="screen" id="s10">
+  <div class="res" style="position:relative">
+    <p class="script t">All systems<br>in sync!</p>
+    <span class="ico" data-i="home"></span>
+    <h1>Housing Scheme<br>Eligibility</h1>
+    <span class="elig">ELIGIBLE</span>
+    <p style="color:var(--muted);font-size:14px">Based on verified information from 3 government systems.</p>
+    <div class="grid3 vv" style="margin-top:28px;text-align:left">
+      <div class="card row"><span class="ico" data-i="shield"></span><div><b>Identity</b><small>Verified</small></div></div>
+      <div class="card row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Verified</small></div></div>
+      <div class="card row"><span class="ico g" data-i="home"></span><div><b>Property</b><small>Verified</small></div></div>
     </div>
+    <div class="facts"><span>Request ID<b>GV-00102</b></span><span>Completed at<b style="font-size:14px">09:43 AM - 12 Sep 2026</b></span></div>
+    <button class="btn" data-go="s12">Continue to application <span data-i="arrow" class="ic-wrap"></span></button>
   </div>
+</section>
 
-  <!-- RISK CARDS -->
-  <div class="section-heading"><span>⚠️</span> Risk Assessment</div>
-  <div class="risk-row">
-    <div class="risk-card risk-medium" id="heat-card">
-      <div class="risk-card-accent"></div>
-      <div class="risk-icon">🔥</div>
-      <div class="risk-label">Heat Risk</div>
-      <div class="risk-level" id="heat-level">Medium</div>
-      <div class="risk-desc" id="heat-desc">Temperatures above 30°C expected. Irrigate in early morning.</div>
-      <div class="risk-badge">Monitor</div>
+<!-- 12 Your requests -->
+<section class="screen" id="s12">
+  <div class="center" style="max-width:860px">
+    <button class="back" data-go="s3"><span data-i="arrowl" class="ic-wrap"></span>Home</button>
+    <h1>Your Requests</h1>
+    <p class="sub">Track and manage all your government service requests.</p>
+    <div class="list">
+      <a class="card" data-go="s10"><span class="ico" data-i="doc"></span><div><b>Housing Scheme Eligibility</b><small>GV-00102 &middot; 12 Sep 2026</small></div><span class="pill">Completed</span></a>
+      <a class="card"><span class="ico" data-i="doc"></span><div><b>Scholarship Verification</b><small>SV-00101 &middot; 08 Sep 2026</small></div><span class="pill">Completed</span></a>
+      <a class="card"><span class="ico o" data-i="home"></span><div><b>Income Certificate</b><small>IC-00090 &middot; 01 Sep 2026</small></div><span class="pill p">Processing</span></a>
+      <a class="card"><span class="ico" data-i="doc"></span><div><b>Property Records</b><small>PR-00067 &middot; 01 Sep 2026</small></div><span class="pill">Completed</span></a>
     </div>
-    <div class="risk-card risk-low" id="rain-card">
-      <div class="risk-card-accent"></div>
-      <div class="risk-icon">🌧️</div>
-      <div class="risk-label">Rain Risk</div>
-      <div class="risk-level" id="rain-level">Low</div>
-      <div class="risk-desc" id="rain-desc">Light showers possible. Check drainage before sowing.</div>
-      <div class="risk-badge">All Clear</div>
-    </div>
-    <div class="risk-card risk-low" id="disease-card">
-      <div class="risk-card-accent"></div>
-      <div class="risk-icon">🦠</div>
-      <div class="risk-label">Disease Risk</div>
-      <div class="risk-level" id="disease-level">Low</div>
-      <div class="risk-desc" id="disease-desc">Humidity within safe range. Fungal risk minimal today.</div>
-      <div class="risk-badge">All Clear</div>
-    </div>
+    <p class="script tagline">Small steps.<br>Big impact.</p>
   </div>
-
-  <!-- TODAY'S ADVICE -->
-  <div class="section-heading"><span>💡</span> Today's Advice</div>
-  <div class="advice-card" id="advice-card">
-    <div class="advice-tag">
-      <span>🌾</span> AI-Powered Recommendation
-    </div>
-    <div class="advice-quote" id="advice-quote">
-      Loading personalised advice based on today's conditions…
-    </div>
-    <ul class="advice-bullets" id="advice-bullets">
-      <li><div class="bullet-dot"></div>Fetching data…</li>
-    </ul>
-  </div>
-
-  <!-- 7-DAY FORECAST -->
-  <div class="section-heading"><span>📅</span> 7-Day Forecast</div>
-  <div class="forecast-strip" id="forecast-strip">
-    <!-- Populated by JS -->
-  </div>
-
-  <!-- BOTTOM INFO GRID -->
-  <div class="bottom-grid">
-    <div class="info-card">
-      <div class="info-card-title">Soil & Field Conditions</div>
-      <div class="soil-item"><span class="soil-key">Soil Moisture</span><span class="soil-val" id="soil-moist">--</span></div>
-      <div class="soil-item"><span class="soil-key">Soil Temp</span><span class="soil-val" id="soil-temp">--</span></div>
-      <div class="soil-item"><span class="soil-key">Evapotransp.</span><span class="soil-val" id="soil-evap">--</span></div>
-      <div class="soil-item"><span class="soil-key">Dew Point</span><span class="soil-val" id="dew-point">--</span></div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-title">Crop Score Today</div>
-      <div class="progress-bar-wrap">
-        <div class="pb-label"><span>Sunlight Adequacy</span><span class="pb-val" id="pb-sun-val">--</span></div>
-        <div class="pb-track"><div class="pb-fill pb-amber" id="pb-sun" style="width:0%"></div></div>
-      </div>
-      <div class="progress-bar-wrap">
-        <div class="pb-label"><span>Water Stress</span><span class="pb-val" id="pb-water-val">--</span></div>
-        <div class="pb-track"><div class="pb-fill pb-blue" id="pb-water" style="width:0%"></div></div>
-      </div>
-      <div class="progress-bar-wrap">
-        <div class="pb-label"><span>Growth Conditions</span><span class="pb-val" id="pb-growth-val">--</span></div>
-        <div class="pb-track"><div class="pb-fill pb-green" id="pb-growth" style="width:0%"></div></div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /shell -->
+</section>
 
 <script>
-const API_KEY = "bd5e378503939ddaee76f12ad7a97608"; // Open-Meteo is free, no key needed — using wttr.in as fallback
+const P={
+layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',arrowl:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+home:'<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>',
+doc:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+plus:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+list:'<path d="M5 7h14M5 12h14M5 17h14"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 .5c0 1.5-2.5 2-2.5 3.5M12 17h.01"/>',
+dots:'<path d="M6 12h.01M12 12h.01M18 12h.01"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',
+shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/>'};
+const svg=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+const paint=r=>r.querySelectorAll('[data-i]').forEach(e=>{if(!e.firstChild)e.innerHTML=svg(e.dataset.i)});
+paint(document);
 
-const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-const WMO_ICONS = {
-  0:"☀️",1:"🌤️",2:"⛅",3:"☁️",
-  45:"🌫️",48:"🌫️",
-  51:"🌦️",53:"🌦️",55:"🌧️",
-  61:"🌧️",63:"🌧️",65:"🌧️",
-  71:"🌨️",73:"🌨️",75:"❄️",
-  80:"🌦️",81:"🌧️",82:"⛈️",
-  95:"⛈️",96:"⛈️",99:"⛈️"
-};
-const WMO_DESC = {
-  0:"Clear sky",1:"Mainly clear",2:"Partly cloudy",3:"Overcast",
-  45:"Foggy",48:"Depositing rime fog",
-  51:"Light drizzle",53:"Moderate drizzle",55:"Dense drizzle",
-  61:"Slight rain",63:"Moderate rain",65:"Heavy rain",
-  71:"Slight snow",73:"Moderate snow",75:"Heavy snow",
-  80:"Slight showers",81:"Moderate showers",82:"Violent showers",
-  95:"Thunderstorm",96:"Thunderstorm w/ hail",99:"Thunderstorm w/ heavy hail"
-};
-
-let lat = 12.97, lon = 77.59, cityName = "Bengaluru";
-
-function updateHero(data) {
-  const c = data.current;
-  const wc = c.weather_code;
-  document.getElementById("temp-val").textContent = Math.round(c.temperature_2m);
-  document.getElementById("hero-cond").textContent = WMO_DESC[wc] || "Clear";
-  document.getElementById("hero-icon").textContent = WMO_ICONS[wc] || "☀️";
-  document.getElementById("stat-hum").textContent = c.relative_humidity_2m + "%";
-  document.getElementById("stat-wind").textContent = Math.round(c.wind_speed_10m) + " km/h";
-  document.getElementById("stat-uv").textContent = c.uv_index ?? (data.hourly?.uv_index?.[new Date().getHours()] ?? "N/A");
-  const today_precip_prob = data.daily?.precipitation_probability_max?.[0] ?? 0;
-  document.getElementById("stat-rain").textContent = today_precip_prob + "%";
-  const now = new Date();
-  document.getElementById("hero-date").textContent = days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()];
+let stack=['s1'],timers=[];
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+function go(id,back){
+  timers.forEach(clearTimeout);timers=[];
+  if(!back)stack.push(id);
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  scrollTo(0,0);
+  if(id==='s7')runAgents();if(id==='s8')runExchange();if(id==='s9')later(()=>go('s10'),3500);
 }
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'),b=e.target.closest('[data-back]');
+  if(g)go(g.dataset.go);else if(b){stack.pop();go(stack[stack.length-1]||'s1',true)}
+});
 
-function buildForecast(data) {
-  const strip = document.getElementById("forecast-strip");
-  strip.innerHTML = "";
-  const daily = data.daily;
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(daily.time[i]);
-    const isToday = i === 0;
-    const div = document.createElement("div");
-    div.className = "forecast-day" + (isToday ? " today" : "");
-    const pp = daily.precipitation_probability_max[i];
-    div.innerHTML = `
-      <div class="fday-name">${isToday ? "Today" : days[d.getDay()]}</div>
-      <div class="fday-icon">${WMO_ICONS[daily.weather_code[i]] || "☀️"}</div>
-      <div class="fday-hi">${Math.round(daily.temperature_2m_max[i])}°</div>
-      <div class="fday-lo">${Math.round(daily.temperature_2m_min[i])}°</div>
-      ${pp > 20 ? `<div class="fday-rain">${pp}%</div>` : ""}
-    `;
-    strip.appendChild(div);
-  }
+const AG=[['Request Agent','Understanding your request'],['Routing Agent','Identifying required departments'],['Data Agents',''],['Validation Agent','Checking data consistency'],['Consent & Security Agent','Ensuring secure data exchange'],['Response Agent','Preparing final response']];
+function runAgents(){
+  const ol=document.getElementById('steps');
+  ol.innerHTML=AG.map((a,i)=>`<li><span class="dot">${svg('check')}</span><div><b>${i+1}. ${a[0]}</b><small>${a[1]}</small>${i===2?'<div class="chips"><div class="chip" data-d>Identity<small>Verifying</small></div><div class="chip" data-d>Income<small>Verifying</small></div><div class="chip" data-d>Property<small>Verifying</small></div></div>':''}</div></li>`).join('');
+  const li=[...ol.children];let t=300;
+  li.forEach((el,i)=>{
+    later(()=>el.classList.add('on'),t);
+    if(i===2)ol.querySelectorAll('[data-d]').forEach((c,k)=>later(()=>{c.classList.add('ok');c.querySelector('small').textContent='Verified'},t+500+k*500));
+    t+=i===2?2200:800;
+    later(()=>{el.classList.remove('on');el.classList.add('done')},t-100);
+  });
+  later(()=>go('s8'),t+400);
 }
-
-function assessRisks(data) {
-  const c = data.current;
-  const temp = c.temperature_2m;
-  const hum = c.relative_humidity_2m;
-  const wind = c.wind_speed_10m;
-  const daily = data.daily;
-  const rainTomorrow = daily.precipitation_probability_max[1] ?? 0;
-  const rainToday = daily.precipitation_probability_max[0] ?? 0;
-
-  // Heat risk
-  let heatRisk = "low", heatLevel = "Low", heatDesc = "Temperatures are comfortable for field work.", heatBadge = "All Clear";
-  if (temp >= 38) { heatRisk = "risk-high"; heatLevel = "High"; heatDesc = "Extreme heat. Avoid midday work. Irrigate crops immediately."; heatBadge = "Critical"; }
-  else if (temp >= 33) { heatRisk = "risk-medium"; heatLevel = "Medium"; heatDesc = "Above-average heat. Early morning irrigation recommended."; heatBadge = "Monitor"; }
-  setRiskCard("heat-card", heatRisk, "heat-level", heatLevel, "heat-desc", heatDesc, heatBadge);
-
-  // Rain risk
-  let rainRisk = "risk-low", rainLevel = "Low", rainDesc = "No significant rain expected. Normal operations fine.", rainBadge = "All Clear";
-  if (rainToday >= 70) { rainRisk = "risk-high"; rainLevel = "High"; rainDesc = "Heavy rain likely today. Protect harvested crops and clear drains."; rainBadge = "Take Action"; }
-  else if (rainTomorrow >= 60) { rainRisk = "risk-medium"; rainLevel = "Medium"; rainDesc = "Rain forecast tomorrow. Delay fertiliser application today."; rainBadge = "Plan Ahead"; }
-  else if (rainToday >= 40) { rainRisk = "risk-medium"; rainLevel = "Medium"; rainDesc = "Moderate rain chance today. Check field drainage."; rainBadge = "Monitor"; }
-  setRiskCard("rain-card", rainRisk, "rain-level", rainLevel, "rain-desc", rainDesc, rainBadge);
-
-  // Disease risk (based on humidity + temp combo)
-  let diseaseRisk = "risk-low", diseaseLevel = "Low", diseaseDesc = "Humidity within safe range. Fungal risk is minimal.", diseaseBadge = "All Clear";
-  if (hum > 80 && temp > 25) { diseaseRisk = "risk-high"; diseaseLevel = "High"; diseaseDesc = "High humidity + warmth creates blight & fungal risk. Spray preventively."; diseaseBadge = "Take Action"; }
-  else if (hum > 70) { diseaseRisk = "risk-medium"; diseaseLevel = "Medium"; diseaseDesc = "Elevated humidity. Watch for early blight signs on leaves."; diseaseBadge = "Monitor"; }
-  setRiskCard("disease-card", diseaseRisk, "disease-level", diseaseLevel, "disease-desc", diseaseDesc, diseaseBadge);
-
-  // Alerts
-  if (c.weather_code >= 80 || rainToday >= 75 || wind > 60 || temp > 40) {
-    let alertTitle = "Weather Alert";
-    let alertMsg = "";
-    if (c.weather_code >= 95) alertMsg = "Thunderstorm warning. Secure equipment and avoid open fields.";
-    else if (rainToday >= 75) alertMsg = "Heavy rain forecast. Ensure drainage channels are clear and crops are protected.";
-    else if (wind > 60) alertMsg = "Strong winds expected. Stake tall crops and delay spraying.";
-    else if (temp > 40) alertMsg = "Extreme heat advisory. Limit outdoor work to early morning and evening hours.";
-    if (alertMsg) {
-      document.getElementById("alert-title").textContent = alertTitle;
-      document.getElementById("alert-msg").textContent = alertMsg;
-      document.getElementById("alert-banner").style.display = "flex";
-    }
-  }
-
-  // Crop scores
-  const sunScore = Math.min(100, Math.round(([0,1].includes(c.weather_code)) ? 90 : (c.weather_code <= 3 ? 70 : 40)));
-  const waterStress = Math.round(hum > 60 ? 80 : (hum > 40 ? 55 : 30));
-  const growthScore = Math.round((temp > 20 && temp < 35 && hum > 40 && hum < 85) ? 85 : (temp > 15 ? 60 : 35));
-  animBar("pb-sun", sunScore); document.getElementById("pb-sun-val").textContent = sunScore + "%";
-  animBar("pb-water", waterStress); document.getElementById("pb-water-val").textContent = waterStress + "%";
-  animBar("pb-growth", growthScore); document.getElementById("pb-growth-val").textContent = growthScore + "%";
-
-  // Soil estimates
-  document.getElementById("soil-moist").textContent = hum > 70 ? "Adequate" : (hum > 50 ? "Moderate" : "Low — irrigate");
-  document.getElementById("soil-temp").textContent = Math.round(temp - 3) + "°C";
-  document.getElementById("soil-evap").textContent = (temp > 30 ? "High" : "Moderate") + " (" + (temp > 30 ? "6-8" : "3-5") + " mm/day)";
-  document.getElementById("dew-point").textContent = Math.round(temp - ((100 - hum) / 5)) + "°C";
-
-  // Advice
-  buildAdvice(temp, hum, rainToday, rainTomorrow, c.weather_code, wind);
+function runExchange(){
+  const ph=[...document.querySelectorAll('#phases span')],fl=document.getElementById('flow'),ds=[...document.querySelectorAll('#depts .card')];
+  ph.forEach(p=>p.classList.remove('on'));fl.classList.remove('ok');ds.forEach(d=>d.classList.remove('ok'));
+  ph.forEach((p,i)=>later(()=>{ph.forEach(x=>x.classList.remove('on'));p.classList.add('on')},i*1000));
+  ds.forEach((d,i)=>later(()=>d.classList.add('ok'),2000+i*400));
+  later(()=>fl.classList.add('ok'),3200);
+  later(()=>go('s9'),4600);
 }
-
-function buildAdvice(temp, hum, rainToday, rainTomorrow, wc, wind) {
-  let quote = "";
-  let bullets = [];
-
-  if (rainTomorrow >= 60) {
-    quote = "Rain is forecast for tomorrow — act today to protect your yield and prepare the field.";
-    bullets = [
-      "Apply fertilisers before 2 PM — rain will help absorption overnight.",
-      "Clear field drainage channels to prevent waterlogging.",
-      "Avoid sowing new seeds; wait 2 days after rain for soil to settle.",
-      "Move harvested produce and equipment under shelter."
-    ];
-  } else if (temp > 36) {
-    quote = "Intense heat is your crop's biggest threat today. Prioritise water and timing.";
-    bullets = [
-      "Irrigate before 7 AM and after 6 PM only — midday water evaporates fast.",
-      "Apply mulch to retain soil moisture and cool roots.",
-      "Postpone any pesticide or herbicide spraying — heat causes leaf burn.",
-      "Monitor cattle and livestock for heat stress signs."
-    ];
-  } else if (hum > 80) {
-    quote = "High humidity creates ideal conditions for fungal disease. Stay vigilant.";
-    bullets = [
-      "Inspect leaves for early signs of blight or rust this morning.",
-      "Apply copper-based fungicide as a preventive measure.",
-      "Improve air circulation — remove excess foliage if possible.",
-      "Avoid overhead irrigation which increases surface moisture."
-    ];
-  } else if (wc >= 95) {
-    quote = "Thunderstorms are approaching. Safety comes before fieldwork today.";
-    bullets = [
-      "Keep all workers and livestock away from open fields.",
-      "Secure farming equipment and lightweight structures.",
-      "Use this time for maintenance, record-keeping, or planning.",
-      "Check crops after the storm for damage and drainage issues."
-    ];
-  } else if (rainToday >= 50) {
-    quote = "Rain is likely today — a good sign for the soil but plan your tasks carefully.";
-    bullets = [
-      "Delay harvesting until at least 6 hours after rain stops.",
-      "Check drainage to prevent root damage from waterlogging.",
-      "Use this time to prepare tools and plan upcoming sprays.",
-      "Note soil moisture levels to adjust irrigation schedule."
-    ];
-  } else {
-    quote = "Conditions look favourable today. A good opportunity to get ahead on field work.";
-    bullets = [
-      "Ideal window for transplanting, weeding, and sowing.",
-      "Apply balanced fertiliser if due — conditions are optimal for uptake.",
-      "Good day for pesticide or nutrient spraying — wind below safe threshold.",
-      "Inspect crops for early pest activity while weather is clear."
-    ];
-  }
-
-  document.getElementById("advice-quote").textContent = "\u201C" + quote + "\u201D";
-  const ul = document.getElementById("advice-bullets");
-  ul.innerHTML = bullets.map(b => `<li><div class="bullet-dot"></div>${b}</li>`).join("");
-}
-
-function setRiskCard(cardId, riskClass, levelId, levelText, descId, descText, badge) {
-  const card = document.getElementById(cardId);
-  card.className = "risk-card " + riskClass;
-  document.getElementById(levelId).textContent = levelText;
-  document.getElementById(descId).textContent = descText;
-  const badgeEl = card.querySelector(".risk-badge");
-  if (badgeEl) badgeEl.textContent = badge;
-}
-
-function animBar(id, pct) {
-  setTimeout(() => {
-    document.getElementById(id).style.width = pct + "%";
-  }, 300);
-}
-
-async function fetchWeather(latitude, longitude) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,uv_index&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=7&timezone=auto`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Weather fetch failed");
-  return res.json();
-}
-
-async function init() {
-  document.getElementById("location-name").textContent = cityName;
-  try {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async pos => {
-        lat = pos.coords.latitude;
-        lon = pos.coords.longitude;
-        try {
-          // Reverse geocode with Open-Meteo (no key needed)
-          const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
-          const geoData = await geoRes.json();
-          cityName = geoData.address?.city || geoData.address?.town || geoData.address?.village || "Your Location";
-          document.getElementById("location-name").textContent = cityName;
-        } catch(e) {}
-        loadWeather();
-      }, () => loadWeather());
-    } else {
-      loadWeather();
-    }
-  } catch(e) { loadWeather(); }
-}
-
-async function loadWeather() {
-  try {
-    const data = await fetchWeather(lat, lon);
-    updateHero(data);
-    buildForecast(data);
-    assessRisks(data);
-  } catch(e) {
-    document.getElementById("hero-cond").textContent = "Unable to load weather. Check connection.";
-  }
-}
-
-init();
 </script>
 </body>
 </html>
