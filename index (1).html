@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sarkar Seva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0e1a3d;--muted:#6b7390;--line:#e8eaf3;--indigo:#4a4de8;--tint:#eceeff;--green:#1f9d6b;--gtint:#e3f6ee;--amber:#f5a524;--atint:#fff1d6;--peach:#fff6ec;--card:#fff}
+*{box-sizing:border-box;margin:0}
+body{font-family:Roboto,system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff 40%,var(--peach));min-height:100vh}
+.script{font-family:"Dancing Script",cursive;color:var(--indigo)}
+button,input{font:inherit}
+button{cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+.screen{display:none;min-height:100vh;padding:28px clamp(16px,5vw,64px)}
+.screen.on{display:block}
+.btn{background:var(--ink);color:#fff;padding:13px 24px;border-radius:10px;font-weight:500;display:inline-flex;gap:10px;align-items:center}
+.btn.ghost{background:none;color:var(--ink)}
+.btn.sm{padding:9px 18px}
+.card{background:var(--card);border-radius:14px;box-shadow:0 1px 3px rgba(20,30,70,.06),0 8px 24px rgba(20,30,70,.04)}
+.ico{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--tint);color:var(--indigo);flex:none}
+.ico.g{background:var(--gtint);color:var(--green)}.ico.o{background:var(--atint);color:#d9822b}
+.ico svg,.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.back{color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:24px}
+.back .ic{width:16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+.logo .ico{width:34px;height:34px;background:var(--indigo);color:#fff}
+.pill{font-size:13px;font-weight:500;padding:5px 12px;border-radius:99px;background:var(--gtint);color:var(--green)}
+.pill.p{background:var(--atint);color:#c47a0d}
+.center{max-width:720px;margin:0 auto}
+h1{font-size:30px;font-weight:700}
+.sub{color:var(--muted);margin:6px 0 24px}
+.row{display:flex;align-items:center;gap:14px;padding:16px 20px}
+.row b{display:block}.row small{color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:700px){.grid3,.grid4,.two,.hero,.signin,.shell{grid-template-columns:1fr!important}.side,.art{display:none!important}}
+
+/* 1 landing */
+.nav{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto}
+.nav nav{display:flex;gap:32px;align-items:center;color:var(--muted)}
+.hero{max-width:1200px;margin:48px auto 0;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.hero .script.big{font-size:clamp(64px,10vw,120px);line-height:1;color:var(--ink);display:block;margin:4px 0 20px}
+.hero .lead{font-size:30px}
+.hero p{color:var(--muted);font-size:17px;line-height:1.7}
+.hero .cta{display:flex;gap:24px;align-items:center;margin:28px 0}
+.hero .tag{font-size:26px;line-height:1.3}
+.orbit{position:relative;height:420px;max-width:460px;margin:auto;width:100%}
+.orbit>*{position:absolute}
+.orbit .core{left:50%;top:50%;width:130px;height:130px;margin:-65px;border-radius:32px;background:linear-gradient(145deg,#5a63f5,#3a35d6);color:#fff;display:grid;place-items:center;font-weight:700;box-shadow:0 20px 50px rgba(74,77,232,.35)}
+.orbit .n{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-weight:500;text-align:center}
+.n.i{left:50%;top:0;margin-left:-48px;background:#e8ecff;color:var(--indigo)}
+.n.c{left:2%;bottom:6%;background:#fff1c9;color:#b7791f}
+.n.r{right:2%;bottom:6%;background:#dcf5e8;color:var(--green)}
+.orbit svg.l{inset:0;width:100%;height:100%;stroke:#c3c8e8;stroke-dasharray:4 6}
+
+/* 2 sign in */
+.signin{display:grid;grid-template-columns:1fr 1fr;max-width:1100px;margin:0 auto;min-height:80vh;overflow:hidden}
+.signin .art{background:linear-gradient(#ecdcf5,#ffe0c2 60%);position:relative}
+.signin .art .script{position:absolute;left:32px;top:28px;font-size:30px;line-height:1.1}
+.signin .art .sea{position:absolute;inset:auto 0 0;height:36%;background:#4c80ad}
+.signin .art .arch{position:absolute;left:18%;bottom:36%;width:140px;height:150px;background:#c9954f;border-radius:70px 70px 0 0}
+.signin .art .arch:after{content:"";position:absolute;left:36px;top:40px;width:68px;height:110px;background:#6b4423;border-radius:34px 34px 0 0}
+.signin .pane{padding:clamp(24px,5vw,64px);align-self:center}
+.tabs{display:flex;border-bottom:1px solid var(--line);margin:24px 0 18px}
+.tabs button{flex:1;padding:12px;color:var(--muted);border-bottom:2px solid transparent}
+.tabs .on{color:var(--ink);font-weight:500;border-color:var(--ink)}
+.field{display:flex;gap:12px;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:16px}
+.field input{border:0;outline:0;flex:1;background:none}
+.sep{text-align:center;color:var(--muted);margin:14px 0;font-size:13px}
+.gbtn{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px;font-weight:500;background:#fff}
+.secure{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
+
+/* 3 dashboard */
+.shell{display:grid;grid-template-columns:230px 1fr;gap:32px;max-width:1200px;margin:0 auto}
+.side{display:flex;flex-direction:column;gap:6px;min-height:80vh}
+.side .logo{margin-bottom:24px}
+.side button{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:10px;color:var(--muted);text-align:left}
+.side .on{background:var(--tint);color:var(--ink);font-weight:500}
+.side .me{margin-top:auto;display:flex;gap:10px;align-items:center;padding:12px 14px;border-top:1px solid var(--line)}
+.me i{font-style:normal;background:var(--tint);color:var(--indigo);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:500}
+.ask{padding:20px;margin:20px 0 32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ask b{width:100%}
+.ask input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:14px;outline:0}
+.ask .btn{padding:13px 16px}
+h2{font-size:17px;margin-bottom:14px;font-weight:700}
+.svc{padding:24px 12px;border-radius:14px;display:grid;gap:10px;justify-items:center;font-weight:500;font-size:14px;text-align:center}
+.svc:nth-child(1){background:#fff0dd;color:#c46f12}.svc:nth-child(2){background:#e6eeff;color:#3552d6}
+.svc:nth-child(3){background:#e1f5ea;color:var(--green)}.svc:nth-child(4){background:#ece9ff;color:#5b52c9}
+.head{display:flex;justify-content:space-between;align-items:center}
+.head button{color:var(--indigo);font-size:14px;font-weight:500}
+
+/* 4-5 */
+.center h1.script{font-size:clamp(40px,7vw,64px);color:var(--ink);text-align:center;font-weight:500;margin:20px 0 32px}
+.foot{display:flex;justify-content:flex-end;margin-top:24px}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.meta{padding:14px 20px;margin-top:16px;color:var(--muted);font-size:14px}
+
+/* 6 consent */
+.consent{display:grid;grid-template-columns:1.3fr 1fr;max-width:1100px;margin:0 auto;overflow:hidden}
+.consent>div:first-child{padding:clamp(24px,4vw,48px)}
+.consent .art{background:linear-gradient(160deg,#eef0ff,var(--peach));display:grid;place-content:center;justify-items:center;gap:20px;padding:32px}
+.shield{width:110px;height:110px;border-radius:30px;background:#dfe5ff;color:var(--indigo);display:grid;place-items:center}
+.shield svg{width:52px;height:52px;fill:none;stroke:currentColor;stroke-width:1.6}
+.art .script{font-size:26px;line-height:1.2}
+.tick{width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;margin-left:auto;flex:none}
+.tick .ic{width:14px;stroke-width:3}
+.note{background:#f3f5ff;border-radius:10px;padding:14px 16px;color:var(--muted);font-size:14px;margin:16px 0 24px;line-height:1.6}
+.consent .row{border-bottom:1px solid var(--line)}
+
+/* 7 orchestration */
+.dark{background:#0b1a3e;color:#fff;border-radius:18px;padding:32px;max-width:1100px;margin:0 auto;min-height:80vh;position:relative}
+.dark .top{display:flex;justify-content:space-between;color:#9fb0dc;font-size:13px}
+.dark h1{margin:8px 0 28px}
+.steps{list-style:none;padding:0;position:relative}
+.steps li{display:flex;gap:16px;padding-bottom:22px;opacity:.4;transition:.3s}
+.steps li.on,.steps li.done{opacity:1}
+.dot{width:26px;height:26px;border-radius:50%;border:2px solid #3b4d80;flex:none;display:grid;place-items:center}
+.done .dot{background:var(--green);border-color:var(--green)}
+.on .dot{border-color:#5a7bff}
+.dot .ic{width:14px;stroke-width:3;opacity:0}.done .dot .ic{opacity:1}
+.steps small{display:block;color:#8ea0cf;margin-top:2px}
+.chips{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.chip{padding:12px 18px;border-radius:10px;border:1px solid #f5a52480;background:#3a2c10;min-width:150px;font-weight:500}
+.chip small{color:var(--amber);margin:2px 0 0 18px}
+.chip:before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--amber);margin-right:8px}
+.chip.ok{background:#0d3a35;border-color:#1f9d6b80}.chip.ok small{color:#4ad6a0}.chip.ok:before{background:#27c28a}
+.dark .script{position:absolute;right:6%;top:36%;color:#fff;font-size:30px;line-height:1.2}
+@media(max-width:700px){.dark .script{display:none}}
+
+/* 8 exchange */
+.xch{display:grid;grid-template-columns:260px 1fr 220px;gap:20px;align-items:center;margin:28px 0}
+.xch .col{display:grid;gap:14px}
+.xch .row{padding:14px}
+.flow{height:3px;background:repeating-linear-gradient(90deg,var(--indigo) 0 6px,transparent 6px 12px);opacity:.5;transition:.4s}
+.flow.ok{background:repeating-linear-gradient(90deg,var(--green) 0 6px,transparent 6px 12px);opacity:1}
+.phases{display:flex;justify-content:space-between;padding:12px 16px;color:#a2a8c0;flex-wrap:wrap;gap:8px}
+.phases span{padding:9px 18px;border-radius:99px;transition:.3s}
+.phases .on{background:var(--ink);color:#fff;font-weight:500}
+.xch .tick{opacity:0;transition:.3s}.xch .ok .tick{opacity:1}
+
+/* 9 validation */
+.chk{padding:22px 24px}
+.chk li{list-style:none;display:flex;gap:12px;align-items:center;padding:9px 0;color:#3a4366}
+.chk .ic{color:var(--green);width:16px;stroke-width:3}
+.chk h2{margin-bottom:8px}
+
+/* 10 result */
+.res{text-align:center;max-width:760px;margin:0 auto}
+.res .script.t{position:absolute;left:6%;top:70px;font-size:28px;line-height:1.1;text-align:left}
+.res .ico{margin:24px auto 18px;width:64px;height:64px}
+.res .ico svg{width:30px;height:30px}
+.res h1{font-size:34px}
+.elig{display:inline-block;background:var(--green);color:#fff;font-weight:700;letter-spacing:.06em;font-size:22px;padding:12px 36px;border-radius:10px;margin:18px 0 8px}
+.facts{display:flex;justify-content:space-between;text-align:left;margin:28px 0;color:var(--muted);font-size:13px}
+.facts b{display:block;color:var(--ink);font-size:18px;margin-top:2px}
+.vv small{color:var(--green)!important;font-weight:500}
+
+/* 12 list */
+.list a{display:flex;gap:16px;align-items:center;padding:18px 20px;margin-bottom:12px;cursor:pointer}
+.list a div{flex:1}
+.list a small{color:var(--muted)}
+.tagline{font-size:34px;line-height:1.1;margin-top:40px}
+html{scroll-behavior:smooth}
+.nav button:not(.btn){color:var(--muted)}
+.info{max-width:1200px;margin:72px auto 0}.info p{color:var(--muted);line-height:1.7;max-width:60ch}
+.how{list-style:none;padding:0}.how li{padding:20px;border-radius:14px;background:#fff;box-shadow:0 1px 3px rgba(20,30,70,.06);color:var(--muted);line-height:1.5}.how b{display:block;color:var(--ink);margin-bottom:6px}
+.err{color:#c0392b;font-size:14px;min-height:20px;margin:-6px 0 10px}
+.full{width:100%;justify-content:center}
+.otp{letter-spacing:.5em;font-size:22px;text-align:center}
+.link{color:var(--indigo);font-size:14px}.link:disabled{color:var(--muted);cursor:default}
+.hint{color:var(--muted);font-size:13px;margin-top:8px}
+.lo{margin-left:auto;font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;pointer-events:none;transition:.3s;z-index:9}.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- 1 Landing -->
+<section class="screen on" id="s1">
+  <header class="nav">
+    <div class="logo"><span class="ico" data-i="layers"></span>Sarkar Seva</div>
+    <nav><button data-scroll="s1">Home</button><button data-scroll="about">About</button><button data-scroll="how">How it works</button><button class="btn sm" data-go="s2">Get started</button></nav>
+  </header>
+  <div class="hero">
+    <div>
+      <span class="script lead">Government services</span>
+      <span class="script big">connected.</span>
+      <p>One request. Multiple departments.<br>One coordinated journey.</p>
+      <div class="cta">
+        <button class="btn" data-go="s2">Start a request <span data-i="arrow" class="ic-wrap"></span></button>
+        <button class="btn ghost" data-scroll="how">See how it works</button>
+      </div>
+      <p class="script tag">Same you.<br>Better process.<br>Faster services.</p>
+    </div>
+    <div class="orbit" aria-hidden="true">
+      <svg class="l" viewBox="0 0 460 420"><path d="M230 90V170M180 250L95 330M280 250L365 330" fill="none"/></svg>
+      <div class="core">Sarkar Seva</div>
+      <div class="n i">Identity</div><div class="n c">Income</div><div class="n r">Revenue</div>
+    </div>
+  </div>
+  <div class="info" id="about"><h2>About</h2><p>Sarkar Seva lets you ask for a government service once. With your permission, we check the records each department holds, so you don't carry the same documents from office to office.</p></div>
+  <div class="info" id="how"><h2>How it works</h2><ol class="grid4 how"><li><b>Ask</b>Describe what you need in plain language.</li><li><b>Allow</b>Choose which departments can share which details.</li><li><b>We check</b>Agents fetch and cross-check your records.</li><li><b>Get your answer</b>See the result and continue to your application.</li></ol></div>
+</section>
+
+<!-- 2 Sign in -->
+<section class="screen" id="s2">
+  <div class="card signin">
+    <div class="art"><span class="script">Mumbai<br>Gateway of India</span><div class="arch"></div><div class="sea"></div></div>
+    <div class="pane">
+      <div class="logo"><span class="ico" data-i="layers"></span>Sarkar Seva</div>
+      <form id="f1" novalidate>
+        <h1 style="margin-top:36px">Welcome back!</h1>
+        <p class="sub" style="margin-bottom:0">Log in to continue to Sarkar Seva</p>
+        <div class="tabs"><button type="button" class="on" data-tab="mob">Mobile / Email</button><button type="button" data-tab="aad">Aadhaar</button></div>
+        <label class="field"><span id="pre">+91</span><input id="id" autocomplete="username" placeholder="Mobile number or email" aria-label="Mobile number, email or Aadhaar"></label>
+        <p class="err" id="err" role="alert"></p>
+        <button class="btn full" id="send">Send OTP</button>
+        <div class="sep">or</div>
+        <button type="button" class="gbtn" id="goog">Continue with Google</button>
+        <p class="secure">Secure and trusted. Your data is safe with us.</p>
+      </form>
+      <form id="f2" novalidate hidden>
+        <h1 style="margin-top:36px">Enter the OTP</h1>
+        <p class="sub">We sent a 6-digit code to <b id="sent"></b>.</p>
+        <label class="field"><input id="otp" class="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="------" aria-label="6-digit OTP"></label>
+        <p class="err" id="err2" role="alert"></p>
+        <button class="btn full">Verify and continue</button>
+        <p class="hint">Demo mode: use 123456.</p>
+        <div class="head" style="margin-top:16px"><button type="button" class="link" id="resend" disabled></button><button type="button" class="link" id="chg">Change number</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- 3 Dashboard -->
+<section class="screen" id="s3">
+  <div class="shell">
+    <aside class="side">
+      <div class="logo"><span class="ico" data-i="layers"></span>Sarkar Seva</div>
+      <button class="on" data-go="s3"><span data-i="home" class="ic-wrap"></span>Home</button>
+      <button data-go="s3"><span data-i="plus" class="ic-wrap"></span>New Request</button>
+      <button data-go="s12"><span data-i="list" class="ic-wrap"></span>My Requests</button>
+      <button><span data-i="user" class="ic-wrap"></span>Profile</button>
+      <button style="margin-top:auto"><span data-i="help" class="ic-wrap"></span>Help</button>
+      <div class="me"><i id="ini">MC</i><span id="uname">SK</span><button class="lo" id="out">Log out</button></div>
+    </aside>
+    <main>
+      <h1>Hello, <span id="who">Manya</span></h1>
+      <p class="sub" style="margin-bottom:0">Let's get your government work done, together.</p>
+      <form class="card ask" onsubmit="event.preventDefault();startReq(document.getElementById('q').value)">
+        <b>What do you need today?</b>
+        <input id="q" aria-label="Describe your request" placeholder="For example: Check my housing scheme eligibility">
+        <button class="btn" aria-label="Send request"><span data-i="arrow" class="ic-wrap"></span></button>
+      </form>
+      <h2>Popular Services</h2>
+      <div class="grid4" style="margin-bottom:32px">
+        <button class="svc" data-q="Check my housing scheme eligibility"><span data-i="home" class="ic-wrap"></span>Housing Scheme</button>
+        <button class="svc" data-q="Get my income certificate"><span data-i="doc" class="ic-wrap"></span>Income Certificate</button>
+        <button class="svc" data-q="Show my property records"><span data-i="home" class="ic-wrap"></span>Property Records</button>
+        <button class="svc" data-q=""><span data-i="dots" class="ic-wrap"></span>Other Services</button>
+      </div>
+      <div class="head"><h2>Recent Requests</h2><button data-go="s12">View all</button></div>
+      <div class="card row"><span class="ico" data-i="home"></span><div style="flex:1"><b>Housing Scheme Eligibility</b><small>Ref. No. GV-00102 &middot; 2 days ago</small></div><span class="pill">Completed</span></div>
+    </main>
+  </div>
+</section>
+
+<!-- 4 Understood -->
+<section class="screen" id="s4">
+  <div class="center">
+    <button class="back" data-back><span data-i="arrowl" class="ic-wrap"></span>Back</button>
+    <h1 class="script">We understood your request!</h1>
+    <div class="card row"><span class="ico" data-i="home"></span><div><b data-rtitle>Housing Scheme Eligibility</b><small>We'll check information from multiple departments.</small></div></div>
+    <h2 style="margin:32px 0 14px">Systems that will be involved</h2>
+    <div class="grid3">
+      <div class="card row"><span class="ico" data-i="user"></span><div><b>Identity</b><small>Department</small></div></div>
+      <div class="card row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Department</small></div></div>
+      <div class="card row"><span class="ico o" data-i="home"></span><div><b>Revenue</b><small>Department</small></div></div>
+    </div>
+    <div class="foot"><button class="btn" data-go="s5">Continue <span data-i="arrow" class="ic-wrap"></span></button></div>
+  </div>
+</section>
+
+<!-- 5 Review -->
+<section class="screen" id="s5">
+  <div class="center">
+    <button class="back" data-back><span data-i="arrowl" class="ic-wrap"></span>Back</button>
+    <h1>Review your request</h1>
+    <p class="sub">Please check the details before we proceed</p>
+    <div class="card row"><span class="ico" data-i="home"></span><div><b data-rtitle>Housing Scheme Eligibility</b><small>Request Id: <span data-rid>GV-00102</span></small></div></div>
+    <div class="two" style="margin-top:28px">
+      <div><h2>Information Required</h2>
+        <div class="card"><div class="row"><span class="ico" data-i="doc"></span><div><b>Identity</b><small>Name, Aadhaar verification</small></div></div>
+        <div class="row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Annual income details</small></div></div>
+        <div class="row"><span class="ico" data-i="doc"></span><div><b>Property</b><small>Existing property records</small></div></div></div></div>
+      <div><h2>Purpose</h2><div class="card" style="padding:22px;color:var(--muted);line-height:1.6">Determining scheme eligibility based on your verified information.</div></div>
+    </div>
+    <div class="card meta">3 departments &middot; 3 data points &middot; 1 request</div>
+    <div class="foot"><button class="btn" data-go="s6">Continue <span data-i="arrow" class="ic-wrap"></span></button></div>
+  </div>
+</section>
+
+<!-- 6 Consent -->
+<section class="screen" id="s6">
+  <div class="card consent">
+    <div>
+      <h1>You're in control</h1>
+      <p class="sub">Sarkar Seva wants to access your data from the following government systems to process your request.</p>
+      <div class="row"><span class="ico g" data-i="shield"></span><div><b>Identity Department</b><small>Details: Name, Aadhaar, Profile</small></div><span class="tick" data-i="check"></span></div>
+      <div class="row"><span class="ico" data-i="doc"></span><div><b>Income Department</b><small>Details: Income, Tax details</small></div><span class="tick" data-i="check"></span></div>
+      <div class="row"><span class="ico o" data-i="home"></span><div><b>Property Department</b><small>Details: Property records</small></div><span class="tick" data-i="check"></span></div>
+      <p class="note">Your data is accessed securely and only for this request.<br>You can revoke access anytime.</p>
+      <button class="btn" id="allow">Allow access</button>
+      <button class="btn ghost" data-back>Cancel</button>
+    </div>
+    <div class="art">
+      <div class="shield"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+      <p class="script">Your data.<br>Your control.<br>Our responsibility.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 Orchestration -->
+<section class="screen" id="s7">
+  <div class="dark">
+    <div class="top"><span>Request ID: GV-00102</span><span>Processing...</span></div>
+    <h1>Agent Orchestration</h1>
+    <ol class="steps" id="steps"></ol>
+    <p class="script">Multiple agents.<br>One goal.</p>
+  </div>
+</section>
+
+<!-- 8 Exchange -->
+<section class="screen" id="s8">
+  <div class="card" style="max-width:1100px;margin:0 auto;padding:32px">
+    <h1 style="font-size:24px">Data Exchange</h1>
+    <p class="sub" style="margin-bottom:0">Government systems communicating through the interoperability layer</p>
+    <div class="xch">
+      <div class="col" id="depts">
+        <div class="card row"><span class="ico g" data-i="user"></span><b>Identity Dept</b><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico" data-i="doc"></span><b>Income Dept</b><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico o" data-i="home"></span><b>Revenue Dept</b><span class="tick" data-i="check"></span></div>
+      </div>
+      <div class="flow" id="flow"></div>
+      <div class="card row"><div><b>Response</b><small>To Agents</small></div></div>
+    </div>
+    <div class="card phases" id="phases"><span>Request</span><span>Standardize</span><span>Exchange</span><span>Return</span></div>
+  </div>
+</section>
+
+<!-- 9 Validation -->
+<section class="screen" id="s9">
+  <div class="center" style="max-width:960px">
+    <h1>Validating Information</h1>
+    <p class="sub">Cross-checking data across departments</p>
+    <div class="two">
+      <div style="display:grid;gap:14px;align-content:start">
+        <div class="card row"><span class="ico g" data-i="user"></span><div><b>Identity</b><small>Match found</small></div><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Record verified</small></div><span class="tick" data-i="check"></span></div>
+        <div class="card row"><span class="ico" data-i="home"></span><div><b>Property</b><small>Details verified</small></div><span class="tick" data-i="check"></span></div>
+      </div>
+      <div>
+        <ul class="card chk" style="padding-left:24px">
+          <h2>Consistency Check</h2>
+          <li><span data-i="check"></span>Identity matches</li>
+          <li><span data-i="check"></span>Income record valid</li>
+          <li><span data-i="check"></span>Property record found</li>
+          <li><span data-i="check"></span>Required information complete</li>
+        </ul>
+        <p class="script" style="font-size:28px;line-height:1.2;margin-top:24px">No duplicate<br>submission required.</p>
+      </div>
+    </div>
+    <div class="foot"><button class="btn" data-go="s10">See result <span data-i="arrow" class="ic-wrap"></span></button></div>
+  </div>
+</section>
+
+<!-- 10 Result -->
+<section class="screen" id="s10">
+  <div class="res" style="position:relative">
+    <p class="script t">All systems<br>in sync!</p>
+    <span class="ico" data-i="home"></span>
+    <h1 data-rtitle>Housing Scheme<br>Eligibility</h1>
+    <span class="elig">ELIGIBLE</span>
+    <p style="color:var(--muted);font-size:14px">Based on verified information from 3 government systems.</p>
+    <div class="grid3 vv" style="margin-top:28px;text-align:left">
+      <div class="card row"><span class="ico" data-i="shield"></span><div><b>Identity</b><small>Verified</small></div></div>
+      <div class="card row"><span class="ico" data-i="doc"></span><div><b>Income</b><small>Verified</small></div></div>
+      <div class="card row"><span class="ico g" data-i="home"></span><div><b>Property</b><small>Verified</small></div></div>
+    </div>
+    <div class="facts"><span>Request ID<b data-rid>GV-00102</b></span><span>Completed at<b id="done" style="font-size:14px">09:43 AM - 12 Sep 2026</b></span></div>
+    <button class="btn" data-go="s12">Continue to application <span data-i="arrow" class="ic-wrap"></span></button>
+  </div>
+</section>
+
+<!-- 12 Your requests -->
+<section class="screen" id="s12">
+  <div class="center" style="max-width:860px">
+    <button class="back" data-go="s3"><span data-i="arrowl" class="ic-wrap"></span>Home</button>
+    <h1>Your Requests</h1>
+    <p class="sub">Track and manage all your government service requests.</p>
+    <div class="list" id="rl"></div>
+    <p class="script tagline">Small steps.<br>Big impact.</p>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const P={
+layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',arrowl:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+home:'<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>',
+doc:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+plus:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+list:'<path d="M5 7h14M5 12h14M5 17h14"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 .5c0 1.5-2.5 2-2.5 3.5M12 17h.01"/>',
+dots:'<path d="M6 12h.01M12 12h.01M18 12h.01"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',
+shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/>'};
+const svg=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+const paint=r=>r.querySelectorAll('[data-i]').forEach(e=>{if(!e.firstChild)e.innerHTML=svg(e.dataset.i)});
+paint(document);
+
+let stack=['s1'],timers=[];
+const later=(f,ms)=>timers.push(setTimeout(f,ms));
+const PROT=['s3','s4','s5','s6','s7','s8','s9','s10','s12'];
+function go(id,back){
+  if(PROT.includes(id)&&!S())id='s2';else if(id==='s2'&&S())id='s3';
+  timers.forEach(clearTimeout);timers=[];
+  if(!back)stack.push(id);
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  scrollTo(0,0);
+  if(id==='s3')fillUser();if(id==='s12')renderList();
+  if(id==='s7')runAgents();if(id==='s8')runExchange();if(id==='s9')later(()=>go('s10'),3500);
+  if(id==='s10'&&cur&&!cur.saved){cur.saved=1;const d=new Date();$('done').textContent=d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})+' - '+fmt(d);
+    api('POST','/requests/'+cur.id+'/complete',{id:cur.id,title:cur.title,date:fmt(d),status:'Completed'}).catch(()=>{})}
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'),b=e.target.closest('[data-back]'),q=e.target.closest('[data-q]'),sc=e.target.closest('[data-scroll]');
+  if(q)startReq(q.dataset.q);else if(sc)document.getElementById(sc.dataset.scroll).scrollIntoView();else if(g)go(g.dataset.go);else if(b){stack.pop();go(stack[stack.length-1]||'s1',true)}
+});
+
+const AG=[['Request Agent','Understanding your request'],['Routing Agent','Identifying required departments'],['Data Agents',''],['Validation Agent','Checking data consistency'],['Consent & Security Agent','Ensuring secure data exchange'],['Response Agent','Preparing final response']];
+function runAgents(){
+  const ol=document.getElementById('steps');
+  ol.innerHTML=AG.map((a,i)=>`<li><span class="dot">${svg('check')}</span><div><b>${i+1}. ${a[0]}</b><small>${a[1]}</small>${i===2?'<div class="chips"><div class="chip" data-d>Identity<small>Verifying</small></div><div class="chip" data-d>Income<small>Verifying</small></div><div class="chip" data-d>Property<small>Verifying</small></div></div>':''}</div></li>`).join('');
+  const li=[...ol.children];let t=300;
+  li.forEach((el,i)=>{
+    later(()=>el.classList.add('on'),t);
+    if(i===2)ol.querySelectorAll('[data-d]').forEach((c,k)=>later(()=>{c.classList.add('ok');c.querySelector('small').textContent='Verified'},t+500+k*500));
+    t+=i===2?2200:800;
+    later(()=>{el.classList.remove('on');el.classList.add('done')},t-100);
+  });
+  later(()=>go('s8'),t+400);
+}
+function runExchange(){
+  const ph=[...document.querySelectorAll('#phases span')],fl=document.getElementById('flow'),ds=[...document.querySelectorAll('#depts .card')];
+  ph.forEach(p=>p.classList.remove('on'));fl.classList.remove('ok');ds.forEach(d=>d.classList.remove('ok'));
+  ph.forEach((p,i)=>later(()=>{ph.forEach(x=>x.classList.remove('on'));p.classList.add('on')},i*1000));
+  ds.forEach((d,i)=>later(()=>d.classList.add('ok'),2000+i*400));
+  later(()=>fl.classList.add('ok'),3200);
+  later(()=>go('s9'),4600);
+}
+
+/* ===== API LAYER =====
+ Set API.mock=false and API.base to your backend. Expected endpoints (JSON):
+ POST /auth/otp/send     {id,type:'mobile'|'email'|'aadhaar'}  -> {ok}
+ POST /auth/otp/verify   {id,otp}                              -> {token,user:{name}}
+ POST /auth/google       {}                                    -> {token,user}  (swap for a real OAuth redirect)
+ POST /requests          {text}                                -> {id,title}
+ POST /requests/:id/consent  {departments:[]}                  -> {ok}
+ GET  /requests                                                -> [{id,title,date,status}]
+ POST /requests/:id/complete {id,title,date,status}            -> {ok}
+ Agent progress: replace the timers in runAgents()/runExchange() with SSE on GET /requests/:id/stream. */
+const API={base:'/api',mock:true};
+const $=id=>document.getElementById(id);
+const S=()=>{try{return JSON.parse(localStorage.getItem('ss_session'))}catch{return null}};
+const load=k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch{return[]}};
+const fmt=d=>d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SEED=[{id:'GV-00102',title:'Housing Scheme Eligibility',date:'12 Sep 2026',status:'Completed'},{id:'SV-00101',title:'Scholarship Verification',date:'08 Sep 2026',status:'Completed'},{id:'IC-00090',title:'Income Certificate',date:'01 Sep 2026',status:'Processing'},{id:'PR-00067',title:'Property Records',date:'01 Sep 2026',status:'Completed'}];
+const MOCK={
+ 'POST /auth/otp/send':()=>({ok:true}),
+ 'POST /auth/otp/verify':b=>{if(b.otp!=='123456')throw Error('Incorrect OTP. In demo mode use 123456.');return{token:'demo',user:{name:'Manya'}}},
+ 'POST /auth/google':()=>({token:'demo',user:{name:'Manya'}}),
+ 'POST /requests':b=>({id:'GV-'+String(103+load('ss_reqs').length).padStart(5,'0'),title:/income/i.test(b.text)?'Income Certificate':/propert/i.test(b.text)?'Property Records':'Housing Scheme Eligibility'}),
+ 'POST /requests/:id/consent':()=>({ok:true}),
+ 'POST /requests/:id/complete':b=>{localStorage.setItem('ss_reqs',JSON.stringify([b,...load('ss_reqs')]));return{ok:true}},
+ 'GET /requests':()=>[...load('ss_reqs'),...SEED]};
+async function api(method,path,body){
+  if(!API.mock){
+    const r=await fetch(API.base+path,{method,headers:{'Content-Type':'application/json',...(S()?{Authorization:'Bearer '+S().token}:{})},body:body&&JSON.stringify(body)});
+    const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.message||'Something went wrong. Try again.');return j}
+  await new Promise(r=>setTimeout(r,500));
+  return MOCK[method+' '+path.replace(/[A-Z]{2}-\d+/,':id')](body)}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600)}
+
+/* ===== AUTH ===== */
+let tab='mob',pending=null,cd,cur=null;
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;
+  document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
+  $('id').value='';$('id').placeholder=tab==='aad'?'12-digit Aadhaar number':'Mobile number or email';$('pre').hidden=tab==='aad';$('err').textContent=''});
+$('id').oninput=e=>{const v=e.target.value;
+  if(tab==='aad')e.target.value=v.replace(/\D/g,'').slice(0,12).replace(/(\d{4})(?=\d)/g,'$1 ');else $('pre').hidden=/[a-z@]/i.test(v)};
+function parseId(){const v=$('id').value.trim(),d=v.replace(/\s/g,'');
+  if(tab==='aad')return /^\d{12}$/.test(d)?{id:d,type:'aadhaar'}:'Enter your 12-digit Aadhaar number.';
+  if(/^[6-9]\d{9}$/.test(d))return{id:d,type:'mobile'};
+  if(/^[^@\s]+@[^@\s]+\.\w{2,}$/.test(v))return{id:v,type:'email'};
+  return 'Enter a valid 10-digit mobile number or email.'}
+function startCd(){let n=30;clearInterval(cd);const r=$('resend');r.disabled=true;r.textContent='Resend OTP in 30s';
+  cd=setInterval(()=>{n--;r.textContent=n>0?'Resend OTP in '+n+'s':'Resend OTP';r.disabled=n>0;if(n<=0)clearInterval(cd)},1000)}
+async function sendOtp(){const b=$('send');b.disabled=true;b.textContent='Sending...';
+  try{await api('POST','/auth/otp/send',pending);
+    $('sent').textContent=pending.type==='email'?pending.id[0]+'***@'+pending.id.split('@')[1]:pending.type==='aadhaar'?'your Aadhaar-linked mobile':'+91 ******'+pending.id.slice(-4);
+    $('f1').hidden=true;$('f2').hidden=false;$('otp').value='';$('otp').focus();startCd()}
+  catch(e){$('err').textContent=e.message}finally{b.disabled=false;b.textContent='Send OTP'}}
+$('f1').onsubmit=e=>{e.preventDefault();const p=parseId();if(typeof p==='string')return $('err').textContent=p;$('err').textContent='';pending=p;sendOtp()};
+$('resend').onclick=()=>api('POST','/auth/otp/send',pending).then(()=>{startCd();toast('OTP sent again')}).catch(e=>toast(e.message));
+$('chg').onclick=()=>{clearInterval(cd);$('f2').hidden=true;$('f1').hidden=false;$('err2').textContent=''};
+const signIn=r=>{localStorage.setItem('ss_session',JSON.stringify(r));go('s3')};
+$('f2').onsubmit=async e=>{e.preventDefault();const o=$('otp').value.trim();
+  if(!/^\d{6}$/.test(o))return $('err2').textContent='Enter the 6-digit code.';
+  try{signIn(await api('POST','/auth/otp/verify',{id:pending.id,otp:o}));$('f2').hidden=true;$('f1').hidden=false;$('id').value=''}
+  catch(x){$('err2').textContent=x.message}};
+$('goog').onclick=async()=>{try{signIn(await api('POST','/auth/google',{}))}catch(e){$('err').textContent=e.message}};
+$('out').onclick=()=>{localStorage.removeItem('ss_session');stack=['s1'];go('s1',true)};
+function fillUser(){const n=(S().user||{}).name||'there';$('who').textContent=n;$('uname').textContent=n;$('ini').textContent=n.slice(0,2).toUpperCase()}
+
+/* ===== REQUESTS ===== */
+async function startReq(text){text=(text||'').trim();if(!text)return toast('Describe what you need first.');
+  try{cur=await api('POST','/requests',{text});
+    document.querySelectorAll('[data-rtitle]').forEach(e=>e.textContent=cur.title);
+    document.querySelectorAll('[data-rid]').forEach(e=>e.textContent=cur.id);go('s4')}
+  catch(e){toast(e.message)}}
+$('allow').onclick=async()=>{try{await api('POST','/requests/'+(cur?cur.id:'GV-00102')+'/consent',{departments:['identity','income','property']});go('s7')}catch(e){toast(e.message)}};
+async function renderList(){try{const l=await api('GET','/requests');
+  $('rl').innerHTML=l.map(r=>{const p=r.status==='Processing';return `<a class="card" data-go="s10"><span class="ico${p?' o':''}">${svg(p?'home':'doc')}</span><div><b>${esc(r.title)}</b><small>${esc(r.id)} &middot; ${esc(r.date)}</small></div><span class="pill${p?' p':''}">${esc(r.status)}</span></a>`}).join('')}
+  catch(e){toast(e.message)}}
+</script>
+</body>
+</html>
