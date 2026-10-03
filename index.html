@@ -175,7 +175,43 @@ html{scroll-behavior:smooth}
 .hint{color:var(--muted);font-size:13px;margin-top:8px}
 .lo{margin-left:auto;font-size:13px;color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;opacity:0;pointer-events:none;transition:.3s;z-index:9}.toast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+/* ===== ENHANCEMENTS (v3) ===== */
+::selection{background:var(--indigo);color:#fff}
+.nav{position:sticky;top:0;z-index:5;padding:14px 0;margin-top:-28px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px)}
+.btn{transition:transform .15s,box-shadow .15s,background .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(14,26,61,.22)}
+.btn:active{transform:none;box-shadow:none}
+.btn:disabled{opacity:.6;cursor:wait;transform:none;box-shadow:none}
+.btn.ghost:hover{background:var(--tint);box-shadow:none}
+.field{transition:border-color .15s,box-shadow .15s}
+.field:focus-within{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(74,77,232,.15)}
+.field:focus-within:has(+ .err:not(:empty)){border-color:#c0392b}
+.gbtn{transition:background .15s}.gbtn:hover{background:#f6f7fc}
+a.card,.svc,.side button,.tabs button{transition:transform .18s,box-shadow .18s,background .15s,color .15s}
+a.card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(20,30,70,.1)}
+.svc:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,30,70,.1)}
+.side button:hover:not(.on){background:#f4f5fb;color:var(--ink)}
+.tabs button:hover:not(.on){color:var(--ink)}
+.ask:focus-within{box-shadow:0 0 0 3px rgba(74,77,232,.15),0 8px 24px rgba(20,30,70,.06)}
+.ask input:focus{border-color:var(--indigo)}
+.screen.on{animation:in .35s ease-out}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.orbit .core{animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.chip,.phases span,.flow{transition:background .3s,border-color .3s,opacity .3s}
+.pill{white-space:nowrap}
+.toast{max-width:90vw;text-align:center}
+@media(max-width:700px){
+  .screen{padding:20px 16px}
+  .nav nav button:not(.btn){display:none}
+  .hero{margin-top:24px}.orbit{height:320px}
+  .xch{grid-template-columns:1fr}.flow{height:36px;width:3px;margin:auto;background:repeating-linear-gradient(180deg,var(--indigo) 0 6px,transparent 6px 12px)}
+  .flow.ok{background:repeating-linear-gradient(180deg,var(--green) 0 6px,transparent 6px 12px)}
+  .consent{grid-template-columns:1fr}.consent .art{display:none}
+  .facts{flex-wrap:wrap;gap:16px}.res .script.t{position:static;text-align:center;margin-bottom:8px}
+  .dark{padding:20px}.chips{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}.screen.on,.orbit .core{animation:none}}
 </style>
 </head>
 <body>
@@ -250,7 +286,7 @@ html{scroll-behavior:smooth}
       <div class="me"><i id="ini">MC</i><span id="uname">SK</span><button class="lo" id="out">Log out</button></div>
     </aside>
     <main>
-      <h1>Hello, <span id="who">Citizen</span></h1>
+      <h1>Hello, <span id="who">Manya</span></h1>
       <p class="sub" style="margin-bottom:0">Let's get your government work done, together.</p>
       <form class="card ask" onsubmit="event.preventDefault();startReq(document.getElementById('q').value)">
         <b>What do you need today?</b>
@@ -410,6 +446,7 @@ html{scroll-behavior:smooth}
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const P={
 layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
@@ -476,7 +513,33 @@ function runExchange(){
  GET  /requests                                                -> [{id,title,date,status}]
  POST /requests/:id/complete {id,title,date,status}            -> {ok}
  Agent progress: replace the timers in runAgents()/runExchange() with SSE on GET /requests/:id/stream. */
-const API={base:'/api',mock:true};
+/* ===== KEYS AND PROVIDERS: FILL THESE IN =====
+ Safe in the browser: Supabase URL and anon key (protect data with Row Level Security).
+ NEVER put in this file: Supabase service_role key, Twilio/MSG91 tokens, Resend/SendGrid/SMTP keys, UIDAI/Aadhaar credentials.
+ SMS OTP:   Supabase dashboard > Authentication > Providers > Phone (add your Twilio/MSG91/etc. credentials THERE).
+ Email OTP: Supabase dashboard > Authentication > Providers > Email (+ Project Settings > Auth > SMTP for your own sender).
+ Google:    Supabase dashboard > Authentication > Providers > Google. Add this page's URL to Auth > URL Configuration > Redirect URLs.
+ Aadhaar OTP needs your own backend (UIDAI-authorised); it falls through to BACKEND_URL below.
+ While the two Supabase values start with YOUR_, the app stays in demo mode (OTP 123456). */
+const CONFIG={SUPABASE_URL:'YOUR_SUPABASE_URL',SUPABASE_ANON_KEY:'YOUR_SUPABASE_ANON_KEY',BACKEND_URL:'/api'};
+const sb=(window.supabase&&!CONFIG.SUPABASE_URL.startsWith('YOUR_'))?window.supabase.createClient(CONFIG.SUPABASE_URL,CONFIG.SUPABASE_ANON_KEY):null;
+/* Suggested table for requests (not wired yet; requests still use the mock/BACKEND_URL):
+   create table requests(id uuid primary key default gen_random_uuid(), user_id uuid default auth.uid(), ref text, title text, text text, status text default 'Processing', created_at timestamptz default now());
+   alter table requests enable row level security;
+   create policy "own rows" on requests for all using (user_id=auth.uid()) with check (user_id=auth.uid()); */
+const API={base:CONFIG.BACKEND_URL,mock:true};
+async function sbAuth(path,b){
+  const email=b.type==='email',phone='+91'+b.id;
+  if(path==='/auth/otp/send'){
+    const {error}=await sb.auth.signInWithOtp(email?{email:b.id,options:{shouldCreateUser:true}}:{phone});
+    if(error)throw error;return{ok:true}}
+  if(path==='/auth/otp/verify'){
+    const {data,error}=await sb.auth.verifyOtp(email?{email:b.id,token:b.otp,type:'email'}:{phone,token:b.otp,type:'sms'});
+    if(error)throw error;return sbSession(data.session)}
+  if(path==='/auth/google'){
+    const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href.split('#')[0]}});
+    if(error)throw error;return new Promise(()=>{})}}
+const sbSession=x=>({token:x.access_token,user:{name:(x.user.user_metadata||{}).full_name||(x.user.email||'Citizen').split('@')[0]}});
 const $=id=>document.getElementById(id);
 const S=()=>{try{return JSON.parse(localStorage.getItem('ss_session'))}catch{return null}};
 const load=k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch{return[]}};
@@ -492,6 +555,7 @@ const MOCK={
  'POST /requests/:id/complete':b=>{localStorage.setItem('ss_reqs',JSON.stringify([b,...load('ss_reqs')]));return{ok:true}},
  'GET /requests':()=>[...load('ss_reqs'),...SEED]};
 async function api(method,path,body){
+  if(sb&&path.startsWith('/auth/')&&(!body||body.type!=='aadhaar'))return sbAuth(path,body||{});
   if(!API.mock){
     const r=await fetch(API.base+path,{method,headers:{'Content-Type':'application/json',...(S()?{Authorization:'Bearer '+S().token}:{})},body:body&&JSON.stringify(body)});
     const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.message||'Something went wrong. Try again.');return j}
@@ -524,10 +588,11 @@ $('chg').onclick=()=>{clearInterval(cd);$('f2').hidden=true;$('f1').hidden=false
 const signIn=r=>{localStorage.setItem('ss_session',JSON.stringify(r));go('s3')};
 $('f2').onsubmit=async e=>{e.preventDefault();const o=$('otp').value.trim();
   if(!/^\d{6}$/.test(o))return $('err2').textContent='Enter the 6-digit code.';
-  try{signIn(await api('POST','/auth/otp/verify',{id:pending.id,otp:o}));$('f2').hidden=true;$('f1').hidden=false;$('id').value=''}
+  try{signIn(await api('POST','/auth/otp/verify',{id:pending.id,type:pending.type,otp:o}));$('f2').hidden=true;$('f1').hidden=false;$('id').value=''}
   catch(x){$('err2').textContent=x.message}};
 $('goog').onclick=async()=>{try{signIn(await api('POST','/auth/google',{}))}catch(e){$('err').textContent=e.message}};
-$('out').onclick=()=>{localStorage.removeItem('ss_session');stack=['s1'];go('s1',true)};
+$('out').onclick=()=>{if(sb)sb.auth.signOut();localStorage.removeItem('ss_session');stack=['s1'];go('s1',true)};
+if(sb)sb.auth.getSession().then(({data})=>{if(data.session&&!S()){localStorage.setItem('ss_session',JSON.stringify(sbSession(data.session)));go('s3')}});
 function fillUser(){const n=(S().user||{}).name||'there';$('who').textContent=n;$('uname').textContent=n;$('ini').textContent=n.slice(0,2).toUpperCase()}
 
 /* ===== REQUESTS ===== */
